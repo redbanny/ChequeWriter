@@ -138,7 +138,7 @@ namespace ChequeWriter
                 else
                 {
                     result+=inWord.TranscriptRus(centNum);
-                    result += "цента";
+                    result += " центов";
                 }
             }            
             Console.WriteLine(result.Trim());
