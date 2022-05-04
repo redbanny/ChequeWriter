@@ -31,7 +31,7 @@ namespace ChequeWriter
             {
                 Console.WriteLine("Выберите язык вывода: rus\\eng");
                 lang = Console.ReadLine().ToLower();
-                if(!lang.Equals("rus") && !lang.Equals("eng"))
+                if (!lang.Equals("rus") && !lang.Equals("eng"))
                 {
                     throw new Exception("Выбранный язык не найден");
                 }
@@ -97,13 +97,13 @@ namespace ChequeWriter
                     if (lang.Equals("eng"))
                     {
                         result += inWord.TranscriptEng(array_int[i]);
-                        result += " " + array_string_eng[i];
+                        result += array_string_eng[i];
                     }
                     else
                     {
                         result += inWord.TranscriptRus(array_int[i]);
                         if (array_int[i] % 100 >= 10 && array_int[i] % 100 <= 19) result += " " + array_string_rus[i, 2] + " ";
-                        else 
+                        else
                             switch (array_int[i] % 10)
                             {
                                 case 1: result += " " + array_string_rus[i, 0] + " "; break; // 1 тысяча, 1 миллион, 1 миллиард
@@ -117,15 +117,27 @@ namespace ChequeWriter
                                 case 9: result += " " + array_string_rus[i, 2] + " "; break;// 9 тысяч , 9 миллионов, 9 миллиардов
                             }
                     }
-                    
-                }                
+                }
             }
             if (dollarNum != 0)
             {
                 if (lang.Equals("eng"))
                     result += "dollars";
                 else
-                    result += "доллара";
+                    switch (dollarNum % 10)
+                    {
+                        case 1: result += " доллар"; break;
+                        case 2: 
+                        case 3:
+                        case 4: result += " доллара"; break;
+                        case 5: 
+                        case 6:
+                        case 7:
+                        case 8:
+                        case 9:
+                        case 10: result += " долларов"; break;
+
+                    }
             }
             // перевод в текст центов
             if (centNum != 0)
@@ -137,10 +149,22 @@ namespace ChequeWriter
                 }
                 else
                 {
-                    result+=inWord.TranscriptRus(centNum);
-                    result += " центов";
-                }
-            }            
+                    result += inWord.TranscriptRus(centNum);
+                    switch (centNum % 10)
+                    {
+                        case 1: result += " цент"; break;
+                        case 2: 
+                        case 3:
+                        case 4: result += " цента"; break;
+                        case 5: 
+                        case 6:
+                        case 7:
+                        case 8:
+                        case 9:
+                        case 10: result += " центов"; break;
+                    }
+                }                
+            }
             Console.WriteLine(result.Trim());
             Console.ReadKey();
         }
